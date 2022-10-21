@@ -94,35 +94,51 @@ const[isLoopPlayed, isLoopPlayedChange] = useState(false);
                 break;
         }
     }
+
     useEffect (() => {
         window.addEventListener("keydown", handleKeyDown);
         return () => {
             window.removeEventListener("keydown", handleKeyDown)
         }
     })
+    //Import de son
+    function handleSampleChange(note, file) {
+        let fileURL = URL.createObjectURL(file);
+        let buffer = new Tone.Buffer(fileURL);
+        mySampler.current.add(note, buffer, ()=>alert("Le sample a bien été changé."));
+    }
     //Assignation des sons
     const buttonList = [
         { soundPlay: () => soundPlay("C4") ,
             isPlayed: isKickPlayed,
+            id: "kick",
+            handleSampleChange : (e)=>handleSampleChange("C4", e.target.files[0]),
         },
         { soundPlay: () => soundPlay("D#4") ,
             isPlayed: isTomPlayed,
+            id: "tom",
+            handleSampleChange : (e)=>handleSampleChange("D#4", e.target.files[0]),
         },
         { soundPlay: () => soundPlay("F#4") ,
             isPlayed: isCymbalPlayed,
+            id: "cymbal",
+            handleSampleChange : (e)=>handleSampleChange("F#4", e.target.files[0]),
         },
         { soundPlay: () => soundPlay("A4") ,
             isPlayed: isGongPlayed,
+            id: "gong",
+            handleSampleChange : (e)=>handleSampleChange("A4", e.target.files[0]),
         },
         { soundPlay: () => soundPlay("B4") ,
             isPlayed: isDrumPlayed,
+            id: "drum",
+            handleSampleChange : (e)=>handleSampleChange("B4", e.target.files[0]),
         },
         { soundPlay: () => soundPlay("C5") ,
             isPlayed: isLoopPlayed,
+            id: "loop",
+            handleSampleChange : (e)=>handleSampleChange("C5", e.target.files[0]),
         },
-
     ]
-
-
     return {buttonList};
 }
